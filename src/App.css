@@ -1,0 +1,97 @@
+/* When screen is smaller than 700px */
+@media only screen and (max-width: 700px) {
+	#background {
+		position: absolute;
+		right: 0;
+		height: 100%;
+		width: 100%;
+		z-index: -1;
+	}
+
+	.background-image {
+		background-image: url('./images/LogoOnly.png');
+		height: 80%;
+		width: 100%;
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: contain;
+		opacity: 0.08;
+	}
+
+	#smallNavbar .dropdown {
+		background: rgba(2, 182, 219, 255);
+		border-radius: 30px !important;
+	}
+
+	#largeNavbar {
+		display: none;
+	}
+
+	#state h1 {
+		padding-top: 1em;
+	}
+
+	#content .row {
+		padding: 0;
+	}
+}
+
+/* When screen is larger than 700px */
+@media only screen and (min-width: 701px) {
+	#background {
+		position: absolute;
+		right: 0;
+		height: 100%;
+		width: 100%;
+		z-index: -1;
+	}
+
+	.background-image {
+		background-image: url('./images/ExpoLogo.jpg');
+		height: 80%;
+		width: 100%;
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: contain;
+		opacity: 0.05;
+	}
+
+	#smallNavbar {
+		display: none;
+	}
+
+	#state {
+		padding-top: 2.5rem;
+	}
+
+	#state h1 {
+		padding-top: 0.5em;
+		font-size: 3rem;
+	}
+
+	#content .row {
+		padding: 0;
+	}
+
+	#content h3 {
+		font-size: 1.5rem;
+	}
+
+	#content li {
+		padding: 0.2em 0;
+		font-size: 1.2rem;
+	}
+}
+
+/* Applied to all  */
+.highlight {
+	background: yellow;
+}
+
+.nursing {
+	color: purple;
+}
+
+.temporary {
+	color: red;
+}
