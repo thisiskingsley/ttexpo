@@ -1,6 +1,30 @@
 import React from 'react';
+import moment from 'moment';
+moment().format();
 
 class Illinois extends React.Component {
+	state = { refill: null, newRx: null };
+
+	componentDidMount() {
+		setInterval(() => {
+			const cutoffRefill = moment({ hour: 21, minute: 30, seconds: 0 });
+			const cutoffNew = moment({ hour: 22, minute: 0, seconds: 0 });
+			const currentTime = moment();
+			const timeLeftRefill = cutoffRefill.subtract(currentTime);
+			const timeLeftNew = cutoffNew.subtract(currentTime);
+			this.setState({
+				refill: timeLeftRefill.format('(HH:mm:ss [Before Cutoff])'),
+				newRx: timeLeftNew.format('(HH:mm:ss [Before Cutoff])'),
+			});
+		}, 1000);
+	}
+
+	componentWillUnmount() {
+		// fix Warning: Can't perform a React state update on an unmounted component
+		this.setState = (state, callback) => {
+			return;
+		};
+	}
 	render() {
 		return (
 			<>
@@ -80,16 +104,20 @@ class Illinois extends React.Component {
 							<li>If over $100: Enter in Prime batch; will send from ATX</li>
 						</ul>
 					</div>
-					<div className="row cutOffTimes">
+					<div className="row cutoffTimes">
 						<h3>
-							<u>Cut Off Times:</u>
+							<u>Cutoff Times:</u>
 						</h3>
 					</div>
 					<div className="row">
 						<ul>
-							<li>Refills: 3:30PM CST</li>
 							<li>
-								New Prescriptions: 4:00PM CST
+								Refills: 3:30PM CST{' '}
+								<span className="countdown">{this.state.refill}</span>
+							</li>
+							<li>
+								New Prescriptions: 4:00PM CST{' '}
+								<span className="countdown">{this.state.newRx}</span>
 								<ul>
 									<li>
 										If prescription is recieved before 3:30PM, you can enter it
@@ -116,15 +144,9 @@ class Illinois extends React.Component {
 					</div>
 					<div className="row">
 						<ul>
-							<li>
-								Chase Roberson <span className="temporary">(temporarily)</span>
-							</li>
-							<li>
-								Wade Olsen <span className="temporary">(temporarily)</span>
-							</li>
-							<li>
-								Kyle Green <span className="temporary">(temporarily)</span>
-							</li>
+							<li>Chase Roberson</li>
+							<li>Wade Olsen</li>
+							<li>Kyle Green</li>
 						</ul>
 					</div>
 				</div>

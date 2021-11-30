@@ -1,6 +1,31 @@
 import React from 'react';
+import moment from 'moment';
+moment().format();
 
 class Georgia extends React.Component {
+	state = { refill: null, newRx: null };
+
+	componentDidMount() {
+		setInterval(() => {
+			const cutoffRefill = moment({ hour: 20, minute: 0, seconds: 0 });
+			const cutoffNew = moment({ hour: 20, minute: 0, seconds: 0 });
+			const currentTime = moment();
+			const timeLeftRefill = cutoffRefill.subtract(currentTime);
+			const timeLeftNew = cutoffNew.subtract(currentTime);
+			this.setState({
+				refill: timeLeftRefill.format('(HH:mm:ss [Before Cutoff])'),
+				newRx: timeLeftNew.format('(HH:mm:ss [Before Cutoff])'),
+			});
+		}, 1000);
+	}
+
+	componentWillUnmount() {
+		// fix Warning: Can't perform a React state update on an unmounted component
+		this.setState = (state, callback) => {
+			return;
+		};
+	}
+
 	render() {
 		return (
 			<>
@@ -53,18 +78,24 @@ class Georgia extends React.Component {
 							</li>
 						</ul>
 					</div>
-					<div className="row cutOffTimes">
+					<div className="row cutoffTimes">
 						<h3>
-							<u>Cut Off Times:</u>
+							<u>Cutoff Times:</u>
 						</h3>
 					</div>
 					<div className="row">
 						<ul>
-							<li>Refills: 2:00PM CST</li>
-							<li>New Prescriptions: 2:00PM CST</li>
+							<li>
+								Refills: 2:00PM CST{' '}
+								<span className="countdown">{this.state.refill}</span>
+							</li>
+							<li>
+								New Prescriptions: 2:00PM CST{' '}
+								<span className="countdown">{this.state.newRx}</span>
+							</li>
 							<li>Local and SDS drivers leave by 3:00PM CST</li>
 							<li>
-								Message Stephanie Lowe or Katherine Edwards for after cut off
+								Message Stephanie Lowe or Katherine Edwards for after cutoff
 								deliveries
 							</li>
 						</ul>

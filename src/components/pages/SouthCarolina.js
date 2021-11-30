@@ -1,6 +1,31 @@
 import React from 'react';
+import moment from 'moment';
+moment().format();
 
 class SouthCarolina extends React.Component {
+	state = { refill: null, newRx: null };
+
+	componentDidMount() {
+		setInterval(() => {
+			const cutoffRefill = moment({ hour: 21, minute: 30, seconds: 0 });
+			const cutoffNew = moment({ hour: 22, minute: 0, seconds: 0 });
+			const currentTime = moment();
+			const timeLeftRefill = cutoffRefill.subtract(currentTime);
+			const timeLeftNew = cutoffNew.subtract(currentTime);
+			this.setState({
+				refill: timeLeftRefill.format('(HH:mm:ss [Before Cutoff])'),
+				newRx: timeLeftNew.format('(HH:mm:ss [Before Cutoff])'),
+			});
+		}, 1000);
+	}
+
+	componentWillUnmount() {
+		// fix Warning: Can't perform a React state update on an unmounted component
+		this.setState = (state, callback) => {
+			return;
+		};
+	}
+
 	render() {
 		return (
 			<>
@@ -17,9 +42,7 @@ class SouthCarolina extends React.Component {
 					</div>
 					<div className="row">
 						<ul>
-							<li>
-								Filled in Austin <span className="temporary">(temporarily)</span>
-							</li>
+							<li>Filled in Austin</li>
 							<li>
 								Enter STATs into the current day's dailies batch (e.g.,{' '}
 								<em>D1019</em> if today was October 19<sup>th</sup>)
@@ -55,9 +78,9 @@ class SouthCarolina extends React.Component {
 							</li>
 						</ul>
 					</div>
-					<div className="row cutOffTimes">
+					<div className="row cutoffTimes">
 						<h3>
-							<u>Cut Off Times:</u>
+							<u>Cutoff Times:</u>
 						</h3>
 					</div>
 					<div className="row">

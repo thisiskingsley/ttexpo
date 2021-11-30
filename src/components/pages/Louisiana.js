@@ -1,6 +1,31 @@
 import React from 'react';
+import moment from 'moment';
+moment().format();
 
 class Louisiana extends React.Component {
+	state = { refill: null, newRx: null };
+
+	componentDidMount() {
+		setInterval(() => {
+			const cutoffRefill = moment({ hour: 21, minute: 30, seconds: 0 });
+			const cutoffNew = moment({ hour: 22, minute: 0, seconds: 0 });
+			const currentTime = moment();
+			const timeLeftRefill = cutoffRefill.subtract(currentTime);
+			const timeLeftNew = cutoffNew.subtract(currentTime);
+			this.setState({
+				refill: timeLeftRefill.format('(HH:mm:ss [Before Cutoff])'),
+				newRx: timeLeftNew.format('(HH:mm:ss [Before Cutoff])'),
+			});
+		}, 1000);
+	}
+
+	componentWillUnmount() {
+		// fix Warning: Can't perform a React state update on an unmounted component
+		this.setState = (state, callback) => {
+			return;
+		};
+	}
+
 	render() {
 		return (
 			<>
@@ -53,9 +78,9 @@ class Louisiana extends React.Component {
 							</li>
 						</ul>
 					</div>
-					<div className="row cutOffTimes">
+					<div className="row cutoffTimes">
 						<h3>
-							<u>Cut Off Times:</u>
+							<u>Cutoff Times:</u>
 						</h3>
 					</div>
 					<div className="row">
@@ -72,9 +97,7 @@ class Louisiana extends React.Component {
 					</div>
 					<div className="row">
 						<ul>
-							<li>
-								Kyle Green <span className="temporary">(temporarily)</span>
-							</li>
+							<li>Kyle Green</li>
 						</ul>
 					</div>
 				</div>
