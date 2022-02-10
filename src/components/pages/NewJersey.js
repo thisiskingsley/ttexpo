@@ -73,7 +73,7 @@ class NewJersey extends React.Component {
 					</div>
 					<div className="row">
 						<ul>
-							<li>Filled in Austin</li>
+							<li>Filled in New Jersey</li>
 							<li>Enter active month's Cycle Fill medications in the CF batch</li>
 						</ul>
 					</div>
